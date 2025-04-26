@@ -1,46 +1,37 @@
 <template>
     <nav class="sidebar">
-        <ul>
-            <li v-for="section in sections" 
-            :key="section.id"
-            :class="{ active: isActive(section.id) }"
-            @click="setActive(section.id)">
-                {{ section.name }}
-            </li>
-        </ul>
-        <p>&copy;Meunier Marc <br>All reserved rights</p>
-    </nav>
-
+      <ul>
+      <li
+        v-for="section in sections"
+        :key="section.id"
+        :class="{ active: section.id === activeSection }"
+      >
+        {{ section.name }}
+      </li>
+    </ul>
+  </nav>
 </template>
-
-
-
-
 
 <script lang="ts">
 export default {
   name: 'Navigation',
+  props: {
+    activeSection: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
-      activeSection: 'about',  // Section active par défaut
-      // Tableau des sections de la sidebar
       sections: [
-        { id: 'about', name: 'About' },
-        { id: 'projects', name: 'Projects' },
-        { id: 'skills', name: 'Tech Stack' },
-        { id: 'contact', name: 'Contact' },
-      ],
-    };
-  },
-  methods: {
-    setActive(sectionId) {
-      this.activeSection = sectionId;
-    },
-    isActive(sectionId) {
-      return this.activeSection === sectionId;
-    },
-  },
-};
+        { id: 'About', name: 'About' },
+        { id: 'Projects', name: 'Projects' },
+        { id: 'TechStack', name: 'Tech Stack' },
+        { id: 'Contact', name: 'Contact' },
+      ]
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -81,6 +72,7 @@ export default {
 
 .sidebar ul li.active{
     color: #fff;
+    background-color: rgba(164, 158, 158, 0.081);
 }
 
 

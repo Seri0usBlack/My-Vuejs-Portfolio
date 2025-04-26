@@ -1,6 +1,6 @@
 <template>
-    <div class="slider-container">
-        <Navigation :active-index="activeIndex" :titles="slidesTitles" />
+    <div class="sliders-container">
+        <Navigation :activeSection="currentSection" />
     
 
         <div class="slides-viewport">
@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import {ref, onMounted } from 'vue';
+import {ref, onMounted, computed } from 'vue';
 import { gsap } from 'gsap';
 import About from './About.vue';
 import Projects from "./Projects.vue";
@@ -34,7 +34,8 @@ export default {
         const slidesWrapper = ref(null);
 
         const slides = [About, Projects, TechStack, Contact];
-        const slidesTitles = ['About', 'Projects', 'Tech Stack', "Contact"];
+        const sections = ['About', 'Projects', 'TechStack', 'Contact'];
+        const currentSection = computed(() => sections[activeIndex.value]);
 
         const animateSlide = (index) =>{
             gsap.to(slidesWrapper.value, {
@@ -46,13 +47,13 @@ export default {
 
         onMounted(() => {
             setInterval(() => {
-                const nextIndex = (activeIndex.value + 1) % slides.length;
-                activeIndex.value = nextIndex;
+                const nextIndex = (activeIndex.value + 1) % sections.length;
                 animateSlide(nextIndex);
+                activeIndex.value = nextIndex;
             }, 4000);
         });
 
-        return { activeIndex, slidesWrapper, slides, slidesTitles};
+        return { activeIndex, slidesWrapper, currentSection, slides};
     
     }
 }
