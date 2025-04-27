@@ -1,7 +1,7 @@
 <template>
     <div class="sliders-container">
         <div class="sidebar">
-            <Navigation :activeSection="currentSection" />
+            <Navigation :activeSection="currentSection" @updateActiveSection="goToSection" />
         </div>
         
     
@@ -40,23 +40,37 @@ export default {
         const sections = ['About', 'Projects', 'TechStack', 'Contact'];
         const currentSection = computed(() => sections[activeIndex.value]);
 
-        const animateSlide = (index) =>{
-            gsap.to(slidesWrapper.value, {
-                y: -index * window.innerHeight,
-                duration: 1,
-                ease: "power2.inOut"
-            });
-        };
+        const animateSlide = (index) => {
+      gsap.to(slidesWrapper.value, {
+        y: -index * window.innerHeight,
+        duration: 1,
+        ease: 'power2.inOut',
+        onComplete: () => {
+          if (index >= slides.length) {
+            activeIndex.value = 0;
+            gsap.set(slidesWrapper.value, { y: 0 }); 
+          }
+        }
+      });
+    };
+
+        const goToSection = (sectionId) => {
+      const index = sections.indexOf(sectionId);
+      if (index !== -1) {
+        activeIndex.value = index;
+        animateSlide(index);
+      }
+    };
 
         onMounted(() => {
             setInterval(() => {
                 const nextIndex = (activeIndex.value + 1) % sections.length;
                 animateSlide(nextIndex);
                 activeIndex.value = nextIndex;
-            }, 4000);
+            }, 5000);
         });
 
-        return { activeIndex, slidesWrapper, currentSection, slides};
+        return { activeIndex, slidesWrapper, currentSection, slides, goToSection};
     
     }
 }

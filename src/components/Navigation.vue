@@ -5,10 +5,12 @@
         v-for="section in sections"
         :key="section.id"
         :class="{ active: section.id === activeSection }"
+        @click="goToSection(section.id)"
       >
         {{ section.name }}
       </li>
     </ul>
+    <p>&copy; Serious Black <br> All reserved rights</p>
   </nav>
 </template>
 
@@ -29,6 +31,11 @@ export default {
         { id: 'TechStack', name: 'Tech Stack' },
         { id: 'Contact', name: 'Contact' },
       ]
+    }
+  },
+  methods: {
+    goToSection(sectionId: string) {
+      this.$emit('updateActiveSection', sectionId); // Émet l'événement pour changer la section active
     }
   }
 }
@@ -51,7 +58,6 @@ export default {
 
 .sidebar ul {
   list-style-type: none;
-  padding: 0;
 }
 
 .sidebar li {
@@ -61,8 +67,11 @@ export default {
   text-transform: uppercase;
   cursor: pointer;
   transition: hover 0.4s ease-in-out;
-  padding: 2px 15px;
+  padding: 4px 15px;
   border-radius: 20px;
+  text-align: center;
+  letter-spacing: 2px;
+  transition: all 0.3s ease;
 
 }
 
@@ -73,6 +82,7 @@ export default {
 .sidebar ul li.active{
     color: #fff;
     background-color: rgba(164, 158, 158, 0.081);
+    transform: scale(1.2);
 }
 
 
