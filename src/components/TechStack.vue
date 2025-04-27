@@ -1,5 +1,8 @@
 <template>
-    <h1>Stack</h1>
+    <div class="stack-container">
+        <h1>Stack</h1>
+    </div>
+
     
     </template>
     
@@ -11,5 +14,5 @@
     
     
     <style scoped>
-    
+
     </style>

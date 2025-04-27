@@ -1,6 +1,9 @@
 <template>
     <div class="sliders-container">
-        <Navigation :activeSection="currentSection" />
+        <div class="sidebar">
+            <Navigation :activeSection="currentSection" />
+        </div>
+        
     
 
         <div class="slides-viewport">
@@ -65,12 +68,17 @@ export default {
 
 .sliders-container {
   display: flex;
+  height: 100vh;
+  background-color: #242424;
 }
 
+.sidebar{
+    width: 25%;
+}
 .slides-viewport {
   overflow: hidden;
+  width: 75%;
   height: 100vh;
-  width: 100%;
   position: relative;
 }
 
