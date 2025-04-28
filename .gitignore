@@ -3,7 +3,7 @@ node_modules/
 dist/
 .env
 .env.*.local
-src/
+src/assets/
 
 # Logs
 npm-debug.log*
