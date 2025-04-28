@@ -67,7 +67,7 @@ export default {
                 const nextIndex = (activeIndex.value + 1) % sections.length;
                 animateSlide(nextIndex);
                 activeIndex.value = nextIndex;
-            }, 500000000);
+            }, 5000);
         });
 
         return { activeIndex, slidesWrapper, currentSection, slides, goToSection};
