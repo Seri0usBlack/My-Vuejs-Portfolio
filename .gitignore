@@ -24,3 +24,6 @@ coverage/
 
 # Optional build cache
 .cache/
+
+#Others
+assets/photo.png

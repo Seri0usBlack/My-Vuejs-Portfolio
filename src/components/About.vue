@@ -10,7 +10,7 @@
             <div class="social-media-container">
                 <a href="https://github.com/Seri0usBlack"><ion-icon name="logo-github"></ion-icon></a>
                 <a href="https://www.linkedin.com/in/marc-antoine-meunier-48736020a/"><ion-icon name="logo-linkedin"></ion-icon></a>
-                <button>Download my resume</button>
+                <a :href="cv" download="CV_Marc.pdf"><button>Download my resume</button></a>
             </div>
         </div>
     </div>
@@ -20,7 +20,12 @@
     
     <script lang="ts">
     export default {
-        name : 'About',
+        data() {
+            return {
+                // Implémenter cv download ici
+            }
+        
+        },
     };
     
     </script>
