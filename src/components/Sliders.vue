@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import {ref, onMounted, computed } from 'vue';
+import {ref, onMounted, computed, onBeforeUnmount } from 'vue';
 import { gsap } from 'gsap';
 import About from './About.vue';
 import Projects from "./Projects.vue";
@@ -41,38 +41,48 @@ export default {
         const currentSection = computed(() => sections[activeIndex.value]);
 
         const animateSlide = (index) => {
-      gsap.to(slidesWrapper.value, {
-        y: -index * window.innerHeight,
-        duration: 1,
-        ease: 'power2.inOut',
-        onComplete: () => {
-          if (index >= slides.length) {
-            activeIndex.value = 0;
-            gsap.set(slidesWrapper.value, { y: 0 }); 
-          }
-        }
-      });
-    };
+  gsap.to(slidesWrapper.value, {
+    y: -index * window.innerHeight,
+    duration: 1,
+    ease: 'power2.inOut',
+  });
+};
 
-        const goToSection = (sectionId) => {
-      const index = sections.indexOf(sectionId);
-      if (index !== -1) {
-        activeIndex.value = index;
-        animateSlide(index);
-      }
-    };
+const handleWheel = (event) => {
+  if (event.deltaY > 0) {
+    // Molette vers le bas
+    const nextIndex = (activeIndex.value + 1) % sections.length;
+    activeIndex.value = nextIndex;
+    animateSlide(nextIndex);
+  } else {
+    // Molette vers le haut
+    const prevIndex = (activeIndex.value - 1 + sections.length) % sections.length;
+    activeIndex.value = prevIndex;
+    animateSlide(prevIndex);
+  }
+};
 
-        onMounted(() => {
-            setInterval(() => {
-                const nextIndex = (activeIndex.value + 1) % sections.length;
-                animateSlide(nextIndex);
-                activeIndex.value = nextIndex;
-            }, 5000);
-        });
 
-        return { activeIndex, slidesWrapper, currentSection, slides, goToSection};
+const goToSection = (sectionId) => {
+  const index = sections.indexOf(sectionId);
+  if (index !== -1) {
+    activeIndex.value = index;
+    animateSlide(index);
+  }
+};
+
+onMounted(() => {
+  window.addEventListener('wheel', handleWheel, { passive: true });
+});
+
+// N'oublie pas de nettoyer l'événement lorsque le composant est démonté
+onBeforeUnmount(() => {
+  window.removeEventListener('wheel', handleWheel);
+});
+
+ return { activeIndex, slidesWrapper, currentSection, slides, goToSection};
     
-    }
+  }
 }
 
 </script>
