@@ -75,7 +75,6 @@ onMounted(() => {
   window.addEventListener('wheel', handleWheel, { passive: true });
 });
 
-// N'oublie pas de nettoyer l'événement lorsque le composant est démonté
 onBeforeUnmount(() => {
   window.removeEventListener('wheel', handleWheel);
 });
