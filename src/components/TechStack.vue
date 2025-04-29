@@ -85,15 +85,24 @@
     .stack-container li{
         color: #fff;
         border-bottom: 1px solid rgba(164, 158, 158, 0.5);
-        transition: padding 0.4s ease-in-out,
-                    background-color 0.4s ease-in-out;
+        margin: 5px;
+    }
+    
+    .languages-container li,
+   .frameworks-container li,
+   .libraries-container li{
+    transition: all 0.4s ease-in-out;
+    padding: 5px 10px;
+   }
+   .languages-container li:hover,
+   .frameworks-container li:hover,
+   .libraries-container li:hover{
+        scale: 1.05;
+        background-color: rgba(164, 158, 158, 0.2);
+        border-radius: 20px;
         cursor: pointer;
     }
 
-    .stack-container li:hover{
-        padding: 20px;
-        background-color: rgba(164, 158, 158, 0.2);
-    }
 
 
     .languages-container{
@@ -114,6 +123,18 @@
     .libraries-container ul li{
         font-size: 2rem;
         font-weight: bold;
+    }
+    
+    @media screen and (max-width: 379px){
+        .stack-container h1{
+            font-size: 1.5rem;
+        }
+
+        .languages-container ul li,
+        .frameworks-container ul li,
+        .libraries-container ul li {
+            font-size: 1rem;
+        }
     }
 
     </style>

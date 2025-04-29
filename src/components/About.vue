@@ -6,7 +6,7 @@
         </div>
         <div class="right-container">
             <h1>Marc M.</h1>
-            <h3><i>"Front-end builder & pentester :<br> beau, rapide, sécurisé."</i></h3>
+            <h3><i>"Front-end builder & Pentester :<br> beau, rapide, sécurisé."</i></h3>
             <div class="social-media-container">
                 <a href="https://github.com/Seri0usBlack"><ion-icon name="logo-github"></ion-icon></a>
                 <a href="https://www.linkedin.com/in/marc-antoine-meunier-48736020a/"><ion-icon name="logo-linkedin"></ion-icon></a>
@@ -91,5 +91,63 @@
     .social-media-container ion-icon:hover{
         color: rgb(162,162,162);
     }
+
+    @media (max-width: 1024px) {
+  .about-container {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0;
+    text-align: center;
+    padding: 2rem;
+    gap: 1rem;
+  }
+
+  .left-container {
+    margin-bottom: 1.5rem;
+  }
+
+  .photo {
+    max-width: 250px;
+  }
+
+  .right-container {
+    margin-left: 0;
+  }
+
+  .social-media-container {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .social-media-container button {
+    width: 70%;
+    padding: 8px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .photo {
+    max-width: 180px;
+  }
+
+  .right-container h1 {
+    font-size: 1.4rem;
+  }
+
+  .right-container h3 {
+    font-size: 1rem;
+  }
+
+  .social-media-container ion-icon {
+    font-size: 1.5rem;
+  }
+
+  .social-media-container button {
+    width: 100%;
+    font-size: 0.9rem;
+  }
+}
     
     </style>
