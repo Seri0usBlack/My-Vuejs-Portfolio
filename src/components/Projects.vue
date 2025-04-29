@@ -1,5 +1,9 @@
 <template>
-    <h1>Projects</h1>
+<h1>Projects</h1>
+
+
+ 
+
     
     </template>
     
@@ -10,6 +14,7 @@
     </script>
     
     
+
     <style scoped>
-    
+
     </style>

@@ -1,13 +1,13 @@
 <template>
   <form ref="form" @submit.prevent="sendEmail">
     <label>Name</label>
-    <input type="text" name="user_name" v-model="formData.name" placeholder="VOTRE NOM" required />
+    <input type="text" name="user_name" v-model="formData.name" placeholder="YOUR NAME" required />
 
     <label>Email</label>
-    <input type="email" name="user_email" v-model="formData.email" placeholder="VOTRE E-MAIL" required />
+    <input type="email" name="user_email" v-model="formData.email" placeholder="YOUR EMAIL" required />
 
     <label>Message</label>
-    <textarea name="message" v-model="formData.message" placeholder="VOTRE MESSAGE" required></textarea>
+    <textarea name="message" v-model="formData.message" placeholder="YOUR MESSAGE" required></textarea>
 
     <input type="submit" value="SEND" :disabled="!formData.message.trim()" class="btn" />
   </form>
