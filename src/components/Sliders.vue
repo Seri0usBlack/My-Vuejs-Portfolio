@@ -5,7 +5,7 @@
     </div>
 
     <!-- Scroll vertical natif avec snapping fluide -->
-    <div  class="slides-viewport">
+    <div  class="slides-viewport" aria-live="polite">
       <div class="slides-wrapper" ref="slidesWrapper">
         <component
           v-for="(SlideComponent, index) in slides"
@@ -13,6 +13,8 @@
           :key="index"
           class="slide"
           :id="sections[index]"
+          :aria-label="'Section ' + sections[index]"
+          tabindex="0"
         />
       </div>
     </div>
@@ -99,6 +101,7 @@ export default {
   height: 100vh;
   position: relative;
 }
+
 
 .slides-wrapper {
   overflow-y: scroll;

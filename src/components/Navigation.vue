@@ -1,11 +1,12 @@
 <template>
-    <nav class="sidebar">
+    <nav class="sidebar" aria-label="Navigation principale">
       <ul>
       <li
         v-for="section in sections"
         :key="section.id"
         :class="{ active: section.id === activeSection }"
         @click="goToSection(section.id)"
+        :aria-current="section.id === activeSection ? 'page' : null"
       >
         {{ section.name }}
       </li>

@@ -2,7 +2,7 @@
     <div class="about-container">
 
         <div class="left-container">
-            <img src="../assets/photo.png" class="photo">
+            <img src="../assets/photo.png" class="photo" alt="Photo de profil, développeur front-end et Pentester">
         </div>
         <div class="right-container">
             <h1>Marc M.</h1>
@@ -10,7 +10,7 @@
             <div class="social-media-container">
                 <a href="https://github.com/Seri0usBlack"><ion-icon name="logo-github"></ion-icon></a>
                 <a href="https://www.linkedin.com/in/marc-antoine-meunier-48736020a/"><ion-icon name="logo-linkedin"></ion-icon></a>
-                <a :href="cv" download="CV_Marc.pdf"><button>Download my resume</button></a>
+                <a :href="cv" download="CV_Marc.pdf"><button aria-label="Cliquez ici pour télécharger mon CV">Download my resume</button></a>
             </div>
         </div>
     </div>

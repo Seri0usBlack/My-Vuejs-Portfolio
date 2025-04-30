@@ -1,16 +1,16 @@
 <template>
   <div class="form-container">
     <form ref="form" @submit.prevent="sendEmail">
-    <label>Name</label>
-    <input type="text" name="user_name" v-model="formData.name" placeholder="YOUR NAME" required />
+    <label for="Name">Name</label>
+    <input type="text" name="user_name" v-model="formData.name" placeholder="YOUR NAME" required aria-required="true" aria-label="Votre nom complet" />
 
-    <label>Email</label>
-    <input type="email" name="user_email" v-model="formData.email" placeholder="YOUR EMAIL" required />
+    <label for="Email">Email</label>
+    <input type="email" name="user_email" v-model="formData.email" placeholder="YOUR EMAIL" required aria-required="true" aria-label="Votre adresse email" />
 
-    <label>Message</label>
-    <textarea name="message" v-model="formData.message" placeholder="YOUR MESSAGE" required></textarea>
+    <label for="Message">Message</label>
+    <textarea name="message" v-model="formData.message" placeholder="YOUR MESSAGE" required aria-required="true" aria-label="Votre message"></textarea>
 
-    <input type="submit" value="SEND" :disabled="!formData.message.trim()" class="btn" />
+    <input type="submit" value="SEND" :disabled="!formData.message.trim()" class="btn" aria-label="Envoyer message"/>
   </form>
   </div>
 
