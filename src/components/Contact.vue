@@ -1,5 +1,6 @@
 <template>
-  <form ref="form" @submit.prevent="sendEmail">
+  <div class="form-container">
+    <form ref="form" @submit.prevent="sendEmail">
     <label>Name</label>
     <input type="text" name="user_name" v-model="formData.name" placeholder="YOUR NAME" required />
 
@@ -11,11 +12,15 @@
 
     <input type="submit" value="SEND" :disabled="!formData.message.trim()" class="btn" />
   </form>
+  </div>
+
     </template>
     
     <script lang="ts">
     import { ref } from 'vue';
     import emailjs from 'emailjs-com';
+    import { toast } from 'vue3-toastify';
+    import 'vue3-toastify/dist/index.css';
     
     export default {
       setup() {
@@ -27,22 +32,28 @@
 
         const sendEmail = () => {
       emailjs.send(import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID, {
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID, 
+{
         from_name: formData.value.name,
         from_email: formData.value.email,
         message: formData.value.message,
       },   import.meta.env.VITE_EMAILJS_PUBLIC_KEY)
       .then(() => {
-        alert('Message envoyé !');
+        toast.success('Message Envoyé ! Merci', {
+          autoClose: 5000,
+        }); 
+      
         formData.value = { name: '', email: '', message: '' };
       })
       .catch(error => {
         console.error(error);
-        alert('Erreur lors de l’envoi');
+        toast.error("Erreur lors de l'envoi du message. Réessaye dans quelques secondes !", {
+          autoClose: 5000,
+        })
       });
     };
 
-    return { formData, sendEmail };
+    return { formData, sendEmail};
   }
     }
 
@@ -51,8 +62,15 @@
     
     
     <style scoped>
+    .form-container{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      width: 100%;
+    }
     form{
-        max-width: 800px;
+        max-width: 900px;
         width: 100%;
         margin: 0 auto;
         display: flex;
@@ -95,5 +113,16 @@
     .btn:disabled{
         cursor: not-allowed;
         color: #fff;
+    }
+
+    @media (max-width: 379px){
+      form input{
+        font-size: 20px;
+      }
+
+      form textarea{
+        font-size: 20px;
+      }
+
     }
     </style>

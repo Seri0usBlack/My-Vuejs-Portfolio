@@ -133,7 +133,7 @@
         .languages-container ul li,
         .frameworks-container ul li,
         .libraries-container ul li {
-            font-size: 1rem;
+            font-size: 1.5rem;
         }
     }
 

@@ -1,29 +1,34 @@
 <template>
-    <div class="sliders-container">
-        <div class="sidebar">
-            <Navigation :activeSection="currentSection" @updateActiveSection="goToSection" />
-        </div>
-        
-    
+  <div class="sliders-container">
+    <div class="sidebar" v-if="!isMobile">
+      <Navigation :activeSection="currentSection" @updateActiveSection="goToSection" />
+    </div>
 
-        <div class="slides-viewport">
-            <div class="slides-wrapper" ref="slidesWrapper">
-                <component v-for="(SlideComponent, index) in slides"
-                :is="SlideComponent" :key="index" class="slide" />
-            </div>
-          </div>
-          <Mobile />
-        </div>
+    <!-- Scroll vertical natif avec snapping fluide -->
+    <div  class="slides-viewport">
+      <div class="slides-wrapper" ref="slidesWrapper">
+        <component
+          v-for="(SlideComponent, index) in slides"
+          :is="SlideComponent"
+          :key="index"
+          class="slide"
+          :id="sections[index]"
+        />
+      </div>
+    </div>
+
+    <!-- Mobile version -->
+    <!-- <Mobile v-else /> -->
+  </div>
 </template>
 
 <script lang="ts">
-import { ref, onMounted, computed, onBeforeUnmount } from 'vue';
-import { gsap } from 'gsap';
+import { ref, onMounted, computed } from 'vue';
 import About from './About.vue';
-import Projects from "./Projects.vue";
-import TechStack from "./TechStack.vue";
-import Contact from "./Contact.vue";
-import Navigation from "./Navigation.vue";
+import Projects from './Projects.vue';
+import TechStack from './TechStack.vue';
+import Contact from './Contact.vue';
+import Navigation from './Navigation.vue';
 import Mobile from './Mobile.vue';
 
 export default {
@@ -37,105 +42,57 @@ export default {
   },
 
   setup() {
-    const activeIndex = ref(0);
-    const slidesWrapper = ref(null);
+    const slidesWrapper = ref<HTMLElement | null>(null);
+    const isMobile = computed(() => window.innerWidth <= 768);
 
     const slides = [About, Projects, TechStack, Contact];
     const sections = ['About', 'Projects', 'TechStack', 'Contact'];
-    const currentSection = computed(() => sections[activeIndex.value]);
-
-    const animateSlide = (index: number) => {
-      gsap.to(slidesWrapper.value, {
-        y: -index * window.innerHeight,
-        duration: 1,
-        ease: 'power2.inOut',
-      });
-    };
+    const currentSection = ref(sections[0]);
 
     const goToSection = (sectionId: string) => {
-      const index = sections.indexOf(sectionId);
-      if (index !== -1) {
-        activeIndex.value = index;
-        animateSlide(index);
+      currentSection.value = sectionId;
+      const el = document.getElementById(sectionId);
+      if (el) {
+        slidesWrapper.value?.scrollTo({
+  top: el.offsetTop,
+  behavior: 'smooth',
+});
       }
     };
-
-    // Wheel scroll
-    const handleWheel = (event: WheelEvent) => {
-      if (event.deltaY > 0) {
-        const nextIndex = (activeIndex.value + 1) % sections.length;
-        activeIndex.value = nextIndex;
-        animateSlide(nextIndex);
-      } else {
-        const prevIndex = (activeIndex.value - 1 + sections.length) % sections.length;
-        activeIndex.value = prevIndex;
-        animateSlide(prevIndex);
-      }
-    };
-
-    // Touch scroll (mobile)
-    let touchStartY = 0;
-
-    const handleTouchStart = (e: TouchEvent) => {
-      touchStartY = e.touches[0].clientY;
-    };
-
-    const handleTouchEnd = (e: TouchEvent) => {
-      const touchEndY = e.changedTouches[0].clientY;
-      const deltaY = touchStartY - touchEndY;
-
-      if (Math.abs(deltaY) > 50) {
-        if (deltaY > 0) {
-          const nextIndex = (activeIndex.value + 1) % sections.length;
-          activeIndex.value = nextIndex;
-          animateSlide(nextIndex);
-        } else {
-          const prevIndex = (activeIndex.value - 1 + sections.length) % sections.length;
-          activeIndex.value = prevIndex;
-          animateSlide(prevIndex);
-        }
-      }
-    };
-
 
     onMounted(() => {
-      window.addEventListener('wheel', handleWheel, { passive: true });
-      window.addEventListener('touchstart', handleTouchStart, { passive: true });
-      window.addEventListener('touchend', handleTouchEnd, { passive: true });
+      // Optionnel : mettre à jour currentSection au scroll
+      const onScroll = () => {
+        const scrollTop = slidesWrapper.value?.scrollTop || 0;
+        const index = Math.round(scrollTop / window.innerHeight);
+        currentSection.value = sections[index];
+      };
+      slidesWrapper.value?.addEventListener('scroll', onScroll);
     });
-
-    onBeforeUnmount(() => {
-      window.removeEventListener('wheel', handleWheel);
-      window.removeEventListener('touchstart', handleTouchStart);
-      window.removeEventListener('touchend', handleTouchEnd);
-    });
-
-
 
     return {
-      activeIndex,
       slidesWrapper,
-      currentSection,
       slides,
+      isMobile,
+      sections,
+      currentSection,
       goToSection,
     };
   },
 };
-
 </script>
 
-
 <style scoped>
-
 .sliders-container {
   display: flex;
   height: 100vh;
   background-color: #242424;
 }
 
-.sidebar{
-    width: 25%;
+.sidebar {
+  width: 25%;
 }
+
 .slides-viewport {
   overflow: hidden;
   width: 75%;
@@ -144,15 +101,25 @@ export default {
 }
 
 .slides-wrapper {
-  display: flex;
-  flex-direction: column;
+  overflow-y: scroll;
+  height: 100vh;
 }
 
 .slide {
+  scroll-snap-align: start;
   height: 100vh;
   width: 100%;
 }
 
+.slides-wrapper::-webkit-scrollbar {
+  display: none;
+}
+.slides-wrapper {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Responsive behavior */
 @media (max-width: 768px) {
   .sidebar {
     display: none;

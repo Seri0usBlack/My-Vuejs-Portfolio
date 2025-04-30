@@ -66,8 +66,8 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-    
     }
+
     .social-media-container ion-icon{
         font-size: 1.8rem;
         color: #fff;
@@ -82,6 +82,7 @@
         font-weight: bold;
         transition: background-color 0.4s ease-in-out;
         cursor: pointer;
+        color: black;
     }
 
     .social-media-container button:hover{
@@ -141,12 +142,13 @@
   }
 
   .social-media-container ion-icon {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
   }
 
   .social-media-container button {
     width: 100%;
     font-size: 0.9rem;
+    color: black;
   }
 }
     

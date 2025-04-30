@@ -28,14 +28,14 @@ export default {
       sections: [
         { id: 'About', name: 'About' },
         { id: 'Projects', name: 'Projects' },
-        { id: 'TechStack', name: 'Tech Stack' },
+        { id: 'TechStack', name: 'Skills' },
         { id: 'Contact', name: 'Contact' },
       ]
     }
   },
   methods: {
     goToSection(sectionId: string) {
-      this.$emit('updateActiveSection', sectionId); // Émet l'événement pour changer la section active
+      this.$emit('updateActiveSection', sectionId);
     }
   }
 }
