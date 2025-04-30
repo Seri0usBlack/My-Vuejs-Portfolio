@@ -44,7 +44,7 @@ export default {
   },
 
   setup() {
-    const slidesWrapper = ref<HTMLElement | null>(null);
+    const slidesWrapper = ref(null);
     const isMobile = computed(() => window.innerWidth <= 768);
 
     const slides = [About, Projects, TechStack, Contact];
@@ -63,7 +63,7 @@ export default {
     };
 
     onMounted(() => {
-      // Optionnel : mettre à jour currentSection au scroll
+  
       const onScroll = () => {
         const scrollTop = slidesWrapper.value?.scrollTop || 0;
         const index = Math.round(scrollTop / window.innerHeight);
