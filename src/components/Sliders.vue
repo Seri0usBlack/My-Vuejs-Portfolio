@@ -1,10 +1,9 @@
 <template>
   <div class="sliders-container">
-    <div class="sidebar" v-if="!isMobile">
+    <div class="sidebar" v-show="!isMobile">
       <Navigation :activeSection="currentSection" @updateActiveSection="goToSection" />
     </div>
 
-    <!-- Scroll vertical natif avec snapping fluide -->
     <div  class="slides-viewport" aria-live="polite">
       <div class="slides-wrapper" ref="slidesWrapper">
         <component
@@ -96,33 +95,37 @@ export default {
 }
 
 .slides-viewport {
-  overflow: hidden;
   width: 75%;
   height: 100vh;
   position: relative;
+  overflow: hidden;
 }
 
-
 .slides-wrapper {
-  overflow-y: scroll;
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  height: 100%; 
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
 }
 
 .slide {
-  scroll-snap-align: start;
-  height: 100vh;
+  scroll-snap-align: start; 
   width: 100%;
+  min-height: 100vh; 
+  padding: 20px; 
 }
 
 .slides-wrapper::-webkit-scrollbar {
   display: none;
 }
+
 .slides-wrapper {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
 }
 
-/* Responsive behavior */
+
 @media (max-width: 768px) {
   .sidebar {
     display: none;

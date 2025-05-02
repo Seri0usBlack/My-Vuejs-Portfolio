@@ -1,5 +1,6 @@
 <template>
   <div class="form-container">
+    <h1 class="title-form">"Du code, du design, de la création ? On en parle ?"</h1>
     <form ref="form" @submit.prevent="sendEmail">
     <label for="Name">Name</label>
     <input type="text" name="user_name" v-model="formData.name" placeholder="YOUR NAME" required aria-required="true" aria-label="Votre nom complet" />
@@ -64,11 +65,19 @@
     <style scoped>
     .form-container{
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
       width: 100%;
     }
+
+    .title-form{
+      margin-bottom: 10px;
+      text-align: center;
+      color: #fff;
+    }
+
     form{
         max-width: 900px;
         width: 100%;
@@ -115,7 +124,7 @@
         color: #fff;
     }
 
-    @media (max-width: 379px){
+    @media (max-width: 385px){
       form input{
         font-size: 20px;
       }
@@ -123,6 +132,11 @@
       form textarea{
         font-size: 20px;
       }
+
+      .title-form{
+        display: none;
+      }
+
 
     }
     </style>

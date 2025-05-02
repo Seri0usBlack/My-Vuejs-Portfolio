@@ -122,7 +122,7 @@ gsap.registerPlugin(Flip, Draggable);
             absolute: true,
             onEnter: () => {
               gsap.to(box, {
-                maxWidth: '420px',
+                maxWidth: '620px',
                 height: '320px',
                 top: '20vh',
                 left: '50%',
