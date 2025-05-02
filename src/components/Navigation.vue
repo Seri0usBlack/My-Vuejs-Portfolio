@@ -16,7 +16,9 @@
 </template>
 
 <script lang="ts">
-export default {
+import { defineComponent, ref, toRefs, defineEmits } from 'vue';
+
+export default defineComponent({
   name: 'Navigation',
   props: {
     activeSection: {
@@ -24,22 +26,25 @@ export default {
       required: true
     }
   },
-  data() {
+  setup(props, { emit }) {
+    const sections = ref([
+      { id: 'About', name: 'About' },
+      { id: 'Projects', name: 'Projects' },
+      { id: 'TechStack', name: 'Skills' },
+      { id: 'Contact', name: 'Contact' },
+    ]);
+
+    const goToSection = (sectionId: string) => {
+      // Utilisation de `emit` dans la Composition API
+      emit('updateActiveSection', sectionId);
+    };
+
     return {
-      sections: [
-        { id: 'About', name: 'About' },
-        { id: 'Projects', name: 'Projects' },
-        { id: 'TechStack', name: 'Skills' },
-        { id: 'Contact', name: 'Contact' },
-      ]
-    }
-  },
-  methods: {
-    goToSection(sectionId: string) {
-      this.$emit('updateActiveSection', sectionId);
-    }
+      sections,
+      goToSection
+    };
   }
-}
+});
 </script>
 
 <style scoped>

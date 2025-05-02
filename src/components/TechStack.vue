@@ -250,7 +250,7 @@ gsap.registerPlugin(Flip, Draggable);
     border-bottom: 1px solid rgba(164, 158, 158, 0.5);
     margin: 5px;
     transition: all 0.4s ease-in-out;
-    padding: 5px 10px;
+    padding: 5px 15px;
     font-size: 2rem;
     font-weight: bold;
     cursor: pointer;
@@ -263,7 +263,8 @@ gsap.registerPlugin(Flip, Draggable);
   
   .languages-container {
     grid-column: span 2;
-    justify-content: center;
+    width: 100%;
+    padding: 5px 15px;
   }
 
   .overlay {

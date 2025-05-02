@@ -17,9 +17,6 @@
   import mobileAppImage_TML from '../assets/photo_TML.png';
   import mobileAppImage_R from '../assets/photo_R.png'
 
- 
-
-  
   const images = ref([
   { src: mobileAppImage_TML, description: 'Description du projet 1' },
   { src: mobileAppImage_R, description: 'Description du projet 2' },

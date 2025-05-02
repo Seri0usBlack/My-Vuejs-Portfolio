@@ -56,7 +56,6 @@ export default {
       if (el) {
         slidesWrapper.value?.scrollTo({
   top: el.offsetTop,
-  behavior: 'smooth',
 });
       }
     };
