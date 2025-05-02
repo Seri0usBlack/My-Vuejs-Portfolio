@@ -71,7 +71,8 @@
     .social-media-container ion-icon{
         font-size: 1.8rem;
         color: #fff;
-        transition: color 0.4s ease-in-out;
+        transition: color 0.4s ease-in-out,
+                    scale 0.5s ease-in-out;
     }
 
     .social-media-container button{
@@ -91,6 +92,7 @@
 
     .social-media-container ion-icon:hover{
         color: rgb(162,162,162);
+        scale: 1.5;
     }
 
     @media (max-width: 1024px) {
