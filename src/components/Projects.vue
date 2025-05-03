@@ -5,16 +5,29 @@
         v-for="(img, index) in images"
         :key="index"
       >
-        <img :src="img.src" alt="image projet prototype" @click="openInfo_projects($event, img)" class="img_item"/>
-        <p>{{ img.description }}</p>
+        <img :src="img.src" alt="image projet prototype" @click="openInfo_projects($event, img)" class="img_item" style="cursor: pointer;"/>
 
       </div>
-      <div class="overlay_projects" v-show="activeInfo_projects" @click="closeInfo_projects"></div>
-      <div class="info-box-projects" ref="infoBox_projects" v-show="activeInfo_projects">
+        <div class="overlay_projects" 
+        v-show="activeInfo_projects" 
+        @click="closeInfo_projects">
+        </div>
+
+      <div class="info-box-projects" 
+      ref="infoBox_projects" 
+      v-show="activeInfo_projects">
           <div class="close-btn" @click="closeInfo_projects">X</div>
+
           <div class="info-projects-content">
+            <h1 class="title_projects">{{ activeInfo_projects?.title }}</h1>
             <img :src="activeInfo_projects?.src" alt="project preview"  />
-            <p>{{ activeInfo_projects?.description }}</p>
+
+            <div class="description_projects">
+              <p><span>Type:</span> {{ activeInfo_projects?.type }}</p>
+              <p><span>Context:</span> {{ activeInfo_projects?.context }}</p>
+              <p><span>Technologies:</span> {{ activeInfo_projects?.technologies }}</p>
+              <p><span>Description:</span> {{ activeInfo_projects?.description }}</p>
+            </div>
           </div>
       </div>
     </div>
@@ -34,7 +47,7 @@ gsap.registerPlugin(Flip, Draggable);
   const isAnimating_projects = ref(false);
 
   const images = ref([
-  { src: mobileAppImage_TML, description: 'Description du projet 1' },
+  { src: mobileAppImage_TML, description: 'This project demonstrates my front-end development abilities through a responsive and visually enhanced web page', title:'Taxi Martin Lucas', type:'Personal project', technologies:'HTML - CSS - JavaScript - GSAP', context:"A modern redesign of a local taxi company's website" },
   { src: mobileAppImage_R, description: 'Description du projet 2' },
 ]);
 
@@ -220,7 +233,12 @@ const openInfo_projects = (e: MouseEvent, item: { src: string; description: stri
     display: flex;
   flex-direction: column;
   height: 100%;
-  padding-top: 2rem;
+  }
+
+  .info-projects-content h1{
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
   }
 
 .info-projects-content img {
@@ -248,7 +266,20 @@ const openInfo_projects = (e: MouseEvent, item: { src: string; description: stri
   display: none; /* Chrome, Safari, Opera */
 }
 
-@media (max-width: 430px) {
+.description_projects{
+  margin-top: 1rem;
+}
+.description_projects span{
+  font-weight: bold;
+  color: rgb(162, 162, 162);
+  font-size: 1.2rem;
+}
+
+.description_projects p{
+  padding: 5px;
+}
+
+@media (max-width: 431px) {
   
   .info-box-projects {
     width: 90vw !important;
