@@ -115,11 +115,12 @@ gsap.registerPlugin(Flip, Draggable);
           isAnimating.value = true;
   
           Flip.from(state, {
-            duration: 0.5,
+            duration: 1.5,
             ease: 'power2.inOut',
             absolute: true,
             onEnter: () => {
               gsap.to(box, {
+                duration: 1,
                 maxWidth: '620px',
                 height: '320px',
                 top: '20vh',
@@ -305,13 +306,17 @@ gsap.registerPlugin(Flip, Draggable);
 
 
 
-@media screen and (max-width: 379px) {
-  .stack-container h1 {
-    font-size: 1.5rem;
+@media screen and (max-width: 768px) {
+  .info-box {
+    width: 90vw!important;
+    max-width: 90vw!important;
+    height: auto;
+    padding: 1.5rem;
+    font-size: 1rem;
   }
 
-  .stack-container li {
-    font-size: 1.5rem;
+  .info-content h2 {
+    font-size: 1.8rem;
   }
 }
 </style>
