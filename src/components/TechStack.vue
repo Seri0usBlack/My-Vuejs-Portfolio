@@ -45,25 +45,23 @@
       <!-- Info Box -->
       <div class="overlay" v-show="activeInfo" @click="closeInfo"></div>
       <div class="info-box" ref="infoBox" v-show="activeInfo">
-      <div class="close-btn" @click="closeInfo">X</div>
-      <div class="info-content">
-        <h2>{{ activeInfo?.name }}</h2>
-        <p>{{ activeInfo?.description }}</p>
+          <div class="close-btn" @click="closeInfo">X</div>
+          <div class="info-content">
+            <h2>{{ activeInfo?.name }}</h2>
+            <p>{{ activeInfo?.description }}</p>
+          </div>
+          <p class="drg">{{ activeInfo?.drag }}</p>
       </div>
-        <p class="drg">{{ activeInfo?.drag }}</p>
-</div>
     </div>
   </template>
   
-  <script lang="ts">
-  import { defineComponent, nextTick, ref, onMounted, onBeforeUnmount } from 'vue';
+  <script lang="ts" setup>
+  import {nextTick, ref, onMounted, onBeforeUnmount } from 'vue';
   import gsap from 'gsap';
   import Flip from 'gsap/Flip';
   import Draggable from 'gsap/Draggable';
 gsap.registerPlugin(Flip, Draggable);
   
-  export default defineComponent({
-    setup() {
       const infoBox = ref(null);
       const activeInfo = ref<{ name: string; description: string } | null>(null);
       const isAnimating = ref(false);
@@ -212,17 +210,6 @@ gsap.registerPlugin(Flip, Draggable);
         window.removeEventListener('click', handleClickOutside);
       });
   
-      return {
-        languages,
-        framework,
-        library,
-        infoBox,
-        activeInfo,
-        openInfo,
-        closeInfo,
-      };
-    },
-  });
   </script>
   
   <style scoped>
@@ -295,42 +282,36 @@ gsap.registerPlugin(Flip, Draggable);
   color: #aaa;
 }
 
+.info-box {
+  position: fixed;
+  z-index: 1000;
+  background: #1f1f1f;
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+  overflow: hidden;
+  display: none;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
 
 
 
-  @media screen and (max-width: 379px) {
-    .stack-container h1 {
-      font-size: 1.5rem;
-    }
-  
-    .stack-container li {
-      font-size: 1.5rem;
-    }
+@media screen and (max-width: 379px) {
+  .stack-container h1 {
+    font-size: 1.5rem;
   }
-  
 
-  .info-box {
-    position: fixed;
-    z-index: 1000;
-    background: #1f1f1f;
-    color: white;
-    border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    padding: 1rem;
-    overflow: hidden;
-    display: none;
+  .stack-container li {
+    font-size: 1.5rem;
   }
-  
-  .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 1.2rem;
-  }
-  
-  .info-content {
-    padding-top: 2rem;
-  }
-  </style>
+}
+</style>
