@@ -5,7 +5,17 @@
         v-for="(img, index) in images"
         :key="index"
       >
-        <img :src="img.src" alt="image projet prototype" @click="openInfo_projects($event, img)" class="img_item" style="cursor: pointer;"/>
+      <div class="media-wrapper" @click="openInfo_projects($event, img)" style="cursor: pointer;">
+        <img :src="img.src" alt="image projet prototype"/>
+        <img :src="img.src2" class="img_item2" style="border-radius: 20px;" />
+        <div class="media-wrapper-description">
+          <p>{{img.wrapper_description}}</p>
+          <span class="material-icons">north_east</span>
+        </div>
+
+      </div>
+
+
 
       </div>
         <div class="overlay_projects" 
@@ -36,7 +46,9 @@
   <script lang="ts" setup>
   import {nextTick, ref, onMounted, onBeforeUnmount } from 'vue';
   import mobileAppImage_TML from '../assets/photo_TML.png';
+  import mobileAppImage_TML_2 from '../assets/photo_TML_2.png';
   import mobileAppImage_R from '../assets/photo_R.png'
+  import mobileAppImage_R_2 from '../assets/photo_R_2.png'
   import gsap from 'gsap';
   import Flip from 'gsap/Flip';
   import Draggable from 'gsap/Draggable';
@@ -47,8 +59,8 @@ gsap.registerPlugin(Flip, Draggable);
   const isAnimating_projects = ref(false);
 
   const images = ref([
-  { src: mobileAppImage_TML, description: 'This project demonstrates my front-end development abilities through a responsive and visually enhanced web page', title:'Taxi Martin Lucas', type:'Personal project', technologies:'HTML - CSS - JavaScript - GSAP', context:"A modern redesign of a local taxi company's website" },
-  { src: mobileAppImage_R, description: 'Description du projet 2' },
+  { src: mobileAppImage_TML, src2: mobileAppImage_TML_2, wrapper_description:'Check it out !', description: 'This project demonstrates my front-end development abilities through a responsive and visually enhanced web page', title:'Taxi Martin Lucas', type:'Personal project', technologies:'HTML - CSS - JavaScript - GSAP', context:"A modern redesign of a local taxi company's website" },
+  { src: mobileAppImage_R, src2: mobileAppImage_R_2, wrapper_description:'Check it out !', description: 'redesign of the homepage of a luxury watch brand, focusing on a sleek, modern design that highlights the iconic watches. Smooth animations, subtle transitions and interactive effects. The layout features a discreet side menu, ensuring the watches remain the focal point.', title:'Rolex', type:'Personal project', technologies:'HTML - CSS - JavaScript - GSAP', context: 'Modern redesign of a luxury watch brand homepage' },
 ]);
 
 const openInfo_projects = (e: MouseEvent, item: { src: string; description: string}) =>{
@@ -178,8 +190,6 @@ const openInfo_projects = (e: MouseEvent, item: { src: string; description: stri
 
   </script>
     
-    
-
     <style scoped>
 
     .projects-container{
@@ -189,22 +199,53 @@ const openInfo_projects = (e: MouseEvent, item: { src: string; description: stri
         gap: 2rem;
     }
 
-    .project-item{
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+
+    .media-wrapper{
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 7px;
+      padding-bottom: 10px;
+      background-color: rgba(162, 162, 162,0.2);
+      border-radius: 20px;
+      overflow: hidden;
     }
 
-    .project-item img{
-        width: 80%;
+    .media-wrapper img{
         max-width: 100%;
+        border-radius: 10px;
+        display: block;
+        transition: opacity 0.5s ease-in-out;
     }
 
-    .project-item p {
-  font-size: 1rem;
-  color: #333;
-}
+    .media-wrapper .img_item2 {
+      position: absolute;
+      width: 100%;
+      padding: 7px;
+      top: 0;
+      left: 0;
+      opacity: 0;
+    }
+
+    .media-wrapper:hover .img_item {
+    opacity: 0;
+  }
+
+  .media-wrapper:hover .img_item2 {
+    opacity: 1;
+  }
+    .media-wrapper-description{
+      margin-left: 10px;
+      margin-top: 10px;
+      display: flex;
+      color: #fff;
+    }
+
+    .media-wrapper-description span{
+      padding-left: 7px;
+    }
+
   .overlay_projects {
     position: fixed;
     top: 0;
@@ -280,6 +321,24 @@ const openInfo_projects = (e: MouseEvent, item: { src: string; description: stri
 }
 
 @media (max-width: 431px) {
+
+  .projects-container {
+    flex-direction: column;
+    padding: 1rem;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .media_wrapper :hover .img_item{
+    opacity: 1;
+  }
+
+  .media-wrapper :hover .img_item2{
+    opacity: 0;
+  }
+  .media-wrapper img{
+    width: 100%;
+  }
   
   .info-box-projects {
     width: 90vw !important;
@@ -294,5 +353,6 @@ const openInfo_projects = (e: MouseEvent, item: { src: string; description: stri
   .info-projects-content img {
     width: 100%;
   }
+
 }
     </style>
