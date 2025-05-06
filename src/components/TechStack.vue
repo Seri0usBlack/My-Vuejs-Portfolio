@@ -68,23 +68,23 @@ const activeInfo = ref<{ name: string; description: string; drag: string } | nul
 const isAnimating = ref(false);
 
 const languages = [
-  { name: 'HTML', description: 'Langage de balisage pour structurer le contenu web.', drag: 'Maintiens le clique pour me déplacer' },
-  { name: 'CSS', description: 'Langage de style pour mettre en forme le HTML.', drag: 'Maintiens le clique pour me déplacer' },
-  { name: 'SCSS', description: 'Préprocesseur CSS avec variables, mixins, etc.', drag: 'Maintiens le clique pour me déplacer' },
-  { name: 'Javascript', description: 'Langage de programmation côté client.', drag: 'Maintiens le clique pour me déplacer' },
-  { name: 'TypeScript', description: 'Superset de JS avec typage statique.', drag: 'Maintiens le clique pour me déplacer' },
+  { name: 'HTML', description: 'The standard language for structuring content on the web (headings, paragraphs, images, links, etc.).', drag: 'Maintiens le clique pour me déplacer' },
+  { name: 'CSS', description: 'A styling language used to define the visual appearance of HTML elements (colors, fonts, layouts, etc.).', drag: 'Maintiens le clique pour me déplacer' },
+  { name: 'SCSS', description: 'A CSS preprocessor that adds advanced features like variables, nesting, mixins, and functions to streamline styling.', drag: 'Maintiens le clique pour me déplacer' },
+  { name: 'Javascript', description: 'A programming language that adds interactivity and dynamic behavior to web pages (animations, form validation, logic, etc.).', drag: 'Maintiens le clique pour me déplacer' },
+  { name: 'TypeScript', description: 'A strongly typed superset of JavaScript that adds static typing, interfaces, and modern features to help catch errors early and improve code quality during development.', drag: 'Maintiens le clique pour me déplacer' },
 ];
 
 const frameworks = [
-  { name: 'VueJS', description: 'Framework JavaScript progressif pour construire des interfaces utilisateur.', drag: 'Maintiens le clique pour me déplacer' },
-  { name: 'Nuxt', description: 'Framework Vue pour créer des applications universelles (SSR).', drag: 'Maintiens le clique pour me déplacer' },
-  { name: 'Vite', description: 'Outil de build rapide pour projets front-end.', drag: 'Maintiens le clique pour me déplacer' },
+  { name: 'VueJS', description: 'A progressive JavaScript framework for building user interfaces and single-page applications (SPAs).', drag: 'Maintiens le clique pour me déplacer' },
+  { name: 'Nuxt', description: 'A Vue-based framework for building server-rendered, static, or hybrid web applications with ease and best practices built-in.', drag: 'Maintiens le clique pour me déplacer' },
+  { name: 'Vite', description: 'A modern, lightning-fast build tool and development server for front-end projects, especially with frameworks like Vue.js and React.', drag: 'Maintiens le clique pour me déplacer' },
 ];
 
 const libraries = [
-  { name: 'GSAP', description: 'Librairie d’animations ultra-performante pour le web.', drag: 'Maintiens le clique pour me déplacer' },
-  { name: 'Pinia', description: 'State management moderne pour Vue 3.', drag: 'Maintiens le clique pour me déplacer' },
-  { name: 'Vuetify', description: 'UI library avec Material Design pour Vue.', drag: 'Maintiens le clique pour me déplacer' },
+  { name: 'GSAP', description: 'A powerful JavaScript library for creating high-performance, complex animations with smooth transitions.', drag: 'Maintiens le clique pour me déplacer' },
+  { name: 'Pinia', description: 'The official state management library for Vue.js, designed to be simpler and more intuitive than Vuex.', drag: 'Maintiens le clique pour me déplacer' },
+  { name: 'Vuetify', description: 'A Material Design component framework for Vue.js, providing ready-to-use UI components for responsive, modern web apps.', drag: 'Maintiens le clique pour me déplacer' },
 ];
 
 const openInfo = (e: MouseEvent, item: { name: string; description: string; drag: string }) => {
