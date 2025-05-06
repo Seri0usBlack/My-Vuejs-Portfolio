@@ -216,7 +216,7 @@ const openInfo_projects = (e: MouseEvent, item: { src: string; description: stri
         max-width: 100%;
         border-radius: 10px;
         display: block;
-        transition: opacity 0.5s ease-in-out;
+        transition: all 0.7s ease-in-out;
     }
 
     .media-wrapper .img_item2 {

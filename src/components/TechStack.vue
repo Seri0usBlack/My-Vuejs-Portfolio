@@ -319,4 +319,24 @@ gsap.registerPlugin(Flip, Draggable);
     font-size: 1.8rem;
   }
 }
+
+@media screen and (max-width: 430px) {
+  .stack-container li {
+    font-size: 1.5rem;
+    padding: 5px 10px;
+  }
+
+  .stack-container h1 {
+    font-size: 1.5rem;
+  }
+
+  .info-content h2 {
+    font-size: 1.5rem;
+  }
+
+  .info-box {
+    font-size: 0.9rem;
+    padding: 1rem;
+  }
+}
 </style>
