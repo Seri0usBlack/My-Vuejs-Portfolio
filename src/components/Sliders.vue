@@ -1,10 +1,12 @@
 <template>
   <div class="sliders-container">
-    <div class="sidebar" v-show="!isMobile">
+    <!-- Sidebar (desktop only) -->
+    <div class="sidebar" v-if="!isMobile">
       <Navigation :activeSection="currentSection" @updateActiveSection="goToSection" />
     </div>
 
-    <div  class="slides-viewport" aria-live="polite">
+    <!-- Desktop version -->
+    <div v-if="!isMobile" class="slides-viewport" aria-live="polite">
       <div class="slides-wrapper" ref="slidesWrapper">
         <component
           v-for="(SlideComponent, index) in slides"
@@ -19,12 +21,12 @@
     </div>
 
     <!-- Mobile version -->
-    <!-- <Mobile v-else /> -->
+    <component v-else :is="Mobile" />
   </div>
 </template>
 
-<script lang="ts">
-import { ref, onMounted, computed } from 'vue';
+<script lang="ts" setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import About from './About.vue';
 import Projects from './Projects.vue';
 import TechStack from './TechStack.vue';
@@ -32,54 +34,40 @@ import Contact from './Contact.vue';
 import Navigation from './Navigation.vue';
 import Mobile from './Mobile.vue';
 
-export default {
-  components: {
-    Navigation,
-    About,
-    Projects,
-    TechStack,
-    Contact,
-    Mobile,
-  },
+const slidesWrapper = ref<HTMLElement | null>(null);
+const slides = [About, Projects, TechStack, Contact];
+const sections = ['About', 'Projects', 'TechStack', 'Contact'];
+const currentSection = ref(sections[0]);
+const isMobile = ref(false);
 
-  setup() {
-    const slidesWrapper = ref(null);
-    const isMobile = computed(() => window.innerWidth <= 768);
-
-    const slides = [About, Projects, TechStack, Contact];
-    const sections = ['About', 'Projects', 'TechStack', 'Contact'];
-    const currentSection = ref(sections[0]);
-
-    const goToSection = (sectionId: string) => {
-      currentSection.value = sectionId;
-      const el = document.getElementById(sectionId);
-      if (el) {
-        slidesWrapper.value?.scrollTo({
-  top: el.offsetTop,
-});
-      }
-    };
-
-    onMounted(() => {
-  
-      const onScroll = () => {
-        const scrollTop = slidesWrapper.value?.scrollTop || 0;
-        const index = Math.round(scrollTop / window.innerHeight);
-        currentSection.value = sections[index];
-      };
-      slidesWrapper.value?.addEventListener('scroll', onScroll);
+const goToSection = (sectionId: string) => {
+  currentSection.value = sectionId;
+  const el = document.getElementById(sectionId);
+  if (el && slidesWrapper.value) {
+    slidesWrapper.value.scrollTo({
+      top: el.offsetTop,
+      behavior: 'smooth',
     });
-
-    return {
-      slidesWrapper,
-      slides,
-      isMobile,
-      sections,
-      currentSection,
-      goToSection,
-    };
-  },
+  }
 };
+
+const onScroll = () => {
+  const scrollTop = slidesWrapper.value?.scrollTop || 0;
+  const index = Math.round(scrollTop / window.innerHeight);
+  currentSection.value = sections[index] || sections[0];
+};
+
+onMounted(() => {
+  isMobile.value = window.innerWidth <= 768;
+
+  if (!isMobile.value && slidesWrapper.value) {
+    slidesWrapper.value.addEventListener('scroll', onScroll);
+  }
+});
+
+onBeforeUnmount(() => {
+  slidesWrapper.value?.removeEventListener('scroll', onScroll);
+});
 </script>
 
 <style scoped>
@@ -103,16 +91,16 @@ export default {
 .slides-wrapper {
   display: flex;
   flex-direction: column;
-  height: 100%; 
+  height: 100%;
   overflow-y: auto;
   scroll-snap-type: y mandatory;
 }
 
 .slide {
-  scroll-snap-align: start; 
+  scroll-snap-align: start;
   width: 100%;
-  min-height: 100vh; 
-  padding: 20px; 
+  min-height: 100vh;
+  padding: 20px;
 }
 
 .slides-wrapper::-webkit-scrollbar {
@@ -120,10 +108,9 @@ export default {
 }
 
 .slides-wrapper {
-  -ms-overflow-style: none; 
-  scrollbar-width: none; 
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
-
 
 @media (max-width: 768px) {
   .sidebar {

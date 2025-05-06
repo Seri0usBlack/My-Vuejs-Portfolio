@@ -18,16 +18,10 @@
     
     </template>
     
-    <script lang="ts">
-    export default {
-        data() {
-            return {
-                // Implémenter cv download ici
-            }
-        
-        },
-    };
+    <script lang="ts" setup>
+    import cvFile from '../assets/CV_Marc.pdf';
     
+    const cv = cvFile;
     </script>
     
     

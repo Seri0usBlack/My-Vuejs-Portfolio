@@ -6,7 +6,7 @@
         :key="section.id"
         :class="{ active: section.id === activeSection }"
         @click="goToSection(section.id)"
-        :aria-current="section.id === activeSection ? 'page' : null"
+        :aria-current="section.id === activeSection ? 'page' : undefined"
       >
         {{ section.name }}
       </li>
@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, toRefs, defineEmits } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   name: 'Navigation',
@@ -26,7 +26,7 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props, { emit }) {
+  setup(_, { emit }) {
     const sections = ref([
       { id: 'About', name: 'About' },
       { id: 'Projects', name: 'Projects' },

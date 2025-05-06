@@ -44,150 +44,181 @@
   </template>
   
   <script lang="ts" setup>
-  import {nextTick, ref, onMounted, onBeforeUnmount } from 'vue';
+  import { nextTick, ref, onMounted, onBeforeUnmount } from 'vue';
   import mobileAppImage_TML from '../assets/photo_TML.png';
   import mobileAppImage_TML_2 from '../assets/photo_TML_2.png';
-  import mobileAppImage_R from '../assets/photo_R.png'
-  import mobileAppImage_R_2 from '../assets/photo_R_2.png'
+  import mobileAppImage_R from '../assets/photo_R.png';
+  import mobileAppImage_R_2 from '../assets/photo_R_2.png';
   import gsap from 'gsap';
   import Flip from 'gsap/Flip';
   import Draggable from 'gsap/Draggable';
-gsap.registerPlugin(Flip, Draggable);
+  
+  gsap.registerPlugin(Flip, Draggable);
+  
+  interface Project {
+    src: string;
+    src2: string;
+    title: string;
+    type: string;
+    technologies: string;
+    context: string;
+    description: string;
+    wrapper_description: string;
+  }
+  
+  const infoBox_projects = ref<HTMLElement | null>(null);
+  
 
-  const infoBox_projects = ref(null);
-  const activeInfo_projects = ref<{ src: string; description: string} | null>(null);
+  const activeInfo_projects = ref<Project | null>(null);
   const isAnimating_projects = ref(false);
-
-  const images = ref([
-  { src: mobileAppImage_TML, src2: mobileAppImage_TML_2, wrapper_description:'Check it out !', description: 'This project demonstrates my front-end development abilities through a responsive and visually enhanced web page', title:'Taxi Martin Lucas', type:'Personal project', technologies:'HTML - CSS - JavaScript - GSAP', context:"A modern redesign of a local taxi company's website" },
-  { src: mobileAppImage_R, src2: mobileAppImage_R_2, wrapper_description:'Check it out !', description: 'redesign of the homepage of a luxury watch brand, focusing on a sleek, modern design that highlights the iconic watches. Smooth animations, subtle transitions and interactive effects. The layout features a discreet side menu, ensuring the watches remain the focal point.', title:'Rolex', type:'Personal project', technologies:'HTML - CSS - JavaScript - GSAP', context: 'Modern redesign of a luxury watch brand homepage' },
-]);
-
-const openInfo_projects = (e: MouseEvent, item: { src: string; description: string}) =>{
+  
+  const images = ref<Project[]>([
+    {
+      src: mobileAppImage_TML,
+      src2: mobileAppImage_TML_2,
+      wrapper_description: 'Check it out !',
+      description: 'This project demonstrates my front-end development abilities through a responsive and visually enhanced web page',
+      title: 'Taxi Martin Lucas',
+      type: 'Personal project',
+      technologies: 'HTML - CSS - JavaScript - GSAP',
+      context: "A modern redesign of a local taxi company's website",
+    },
+    {
+      src: mobileAppImage_R,
+      src2: mobileAppImage_R_2,
+      wrapper_description: 'Check it out !',
+      description: 'Redesign of the homepage of a luxury watch brand, focusing on a sleek, modern design that highlights the iconic watches.',
+      title: 'Rolex',
+      type: 'Personal project',
+      technologies: 'HTML - CSS - JavaScript - GSAP',
+      context: 'Modern redesign of a luxury watch brand homepage',
+    },
+  ]);
+  
+  const openInfo_projects = (e: MouseEvent, item: Project) => {
+    const box_projects = infoBox_projects.value;
+    if (!box_projects || isAnimating_projects.value) return;
+  
+    const prjcts = e.currentTarget as HTMLElement;
+    const prjctsRect = prjcts.getBoundingClientRect();
+  
+    if (activeInfo_projects.value) {
+      closeInfo_projects(() => openInfo_projects(e, item));
+      return;
+    }
+  
+    const state = Flip.getState(box_projects);
+    activeInfo_projects.value = item;
+  
+    nextTick(() => {
+      Object.assign(box_projects.style, {
+        position: 'fixed',
+        top: `${prjctsRect.top}px`,
+        left: `${prjctsRect.left}px`,
+        width: `${prjctsRect.width}px`,
+        height: `${prjctsRect.height}px`,
+        display: 'block',
+        opacity: '1',
+      });
+  
+      isAnimating_projects.value = true;
+  
+      Flip.from(state, {
+        duration: 1.5,
+        ease: 'power2.inOut',
+        absolute: true,
+        onEnter: () => {
+          gsap.to(box_projects, {
+            duration: 1,
+            maxWidth: '620px',
+            height: 'auto',
+            top: '5vh',
+            left: '50%',
+            x: '-50%',
+            borderRadius: '15px',
+            padding: '2rem',
+            backgroundColor: '#1f1f1f',
+            color: '#fff',
+            onComplete: () => {
+              isAnimating_projects.value = false;
+            },
+          });
+        },
+      });
+    });
+  };
+  
+  const closeInfo_projects = (eventOrCallback?: MouseEvent | (() => void)) => {
+  const onClosed = typeof eventOrCallback === 'function' ? eventOrCallback : undefined;
   const box_projects = infoBox_projects.value;
   if (!box_projects || isAnimating_projects.value) return;
 
-  const prjcts = e.currentTarget as HTMLElement;
-  const prjctsRect = prjcts.getBoundingClientRect();
+  isAnimating_projects.value = true;
 
-  if (activeInfo_projects.value){
-    closeInfo_projects(() => openInfo_projects(e, item));
-    return;
-  }
-
-  const state = Flip.getState(box_projects);
-  activeInfo_projects.value = item;
-
-  nextTick(() => {
-    Object.assign(box_projects.style, {
-      position: 'fixed',
-            top: `${prjctsRect.top}px`,
-            left: `${prjctsRect.left}px`,
-            width: `${prjctsRect.width}px`,
-            height: `${prjctsRect.height}px`,
-            display: 'block',
-            opacity: '1',
-          });
-
-          isAnimating_projects.value = true;
-
-          Flip.from(state, {
-            duration: 1.5,
-            ease: 'power2.inOut',
-            absolute: true,
-            onEnter: () => {
-              gsap.to(box_projects, {
-                duration: 1,
-                maxWidth: '620px',
-                height: 'auto',
-                top: '5vh',
-                left: '50%',
-                x: '-50%',
-                borderRadius: '15px',
-                padding: '2rem',
-                backgroundColor: '#1f1f1f',
-                color: '#fff',
-                onComplete: () => {
-                  isAnimating_projects.value = false;
-                },
-              });
-            },
-          });
-        });
-      };
-
-      const closeInfo_projects = (onClosed?: () => void) =>{
-        const box_projects = infoBox_projects.value;
-        if (!box_projects || isAnimating_projects.value) return;
-
-        isAnimating_projects.value = true;
-
-        gsap.to(box_projects, {
-          autoAlpha: 0,
-          scale: 0.8,
-          duration: 0.5,
-          onComplete: () => {
-            activeInfo_projects.value = null;
-            gsap.set(box_projects, { clearProps: 'all' });
-            isAnimating_projects.value = false;
-            if (onClosed) onClosed();
-          },
-        });
-      };
-
-      const handleClickOutside_projects = (event: MouseEvent) => {
-        const box_projects = infoBox_projects.value;
-        const target = event.target as HTMLElement;
-  
-        if (
-          box_projects &&
-          activeInfo_projects.value &&
-          !box_projects.contains(target) &&
-          !target.closest('.project-item')
-        ) {
-          closeInfo_projects();
-        }
-      };
-
-      onMounted(() => {
-        window.addEventListener('click', handleClickOutside_projects);
-
-        Draggable.create(infoBox_projects.value, {
-          bounds: "body",
-          edgeResistance: 1,
-          type: "x,y",
-          inertia: true,
-    
-    onDragStart() {
-      gsap.to(infoBox_projects.value, {
-        scaleX: 1.25,
-        scaleY: 1.25,
-        duration: 0.2,
-        ease: "power1.out",
-      });
-    },
-    
-    onDragEnd() {
-      gsap.to(infoBox_projects.value, {
-        scaleX: 1,
-        scaleY: 1,
-        rotation: 0,
-        duration: 0.4,
-        ease: "elastic.out(1.5, 0.4)",
-      });
-    },
-
-    onClick() {
-      event?.stopPropagation?.();
+  gsap.to(box_projects, {
+    autoAlpha: 0,
+    scale: 0.8,
+    duration: 0.5,
+    onComplete: () => {
+      activeInfo_projects.value = null;
+      gsap.set(box_projects, { clearProps: 'all' });
+      isAnimating_projects.value = false;
+      if (onClosed) onClosed();
     },
   });
-
-});
+};
   
-      onBeforeUnmount(() => {
-        window.removeEventListener('click', handleClickOutside_projects);
+  const handleClickOutside_projects = (event: MouseEvent) => {
+    const box_projects = infoBox_projects.value;
+    const target = event.target as HTMLElement;
+  
+    if (
+      box_projects &&
+      activeInfo_projects.value &&
+      !box_projects.contains(target) &&
+      !target.closest('.project-item')
+    ) {
+      closeInfo_projects();
+    }
+  };
+  
+  onMounted(() => {
+    window.addEventListener('click', handleClickOutside_projects);
+  
+    if (infoBox_projects.value) {
+      Draggable.create(infoBox_projects.value, {
+        bounds: 'body',
+        edgeResistance: 1,
+        type: 'x,y',
+        inertia: true,
+  
+        onDragStart() {
+          gsap.to(infoBox_projects.value, {
+            scaleX: 1.25,
+            scaleY: 1.25,
+            duration: 0.2,
+            ease: 'power1.out',
+          });
+        },
+  
+        onDragEnd() {
+          gsap.to(infoBox_projects.value, {
+            scaleX: 1,
+            scaleY: 1,
+            rotation: 0,
+            duration: 0.4,
+            ease: 'elastic.out(1.5, 0.4)',
+          });
+        },
+  
+        onClick: () => {},
       });
-
+    }
+  });
+  
+  onBeforeUnmount(() => {
+    window.removeEventListener('click', handleClickOutside_projects);
+  });
   </script>
     
     <style scoped>
