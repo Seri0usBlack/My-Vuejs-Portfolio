@@ -58,7 +58,7 @@ const onScroll = () => {
 };
 
 onMounted(() => {
-  isMobile.value = window.innerWidth <= 768;
+  isMobile.value = window.innerWidth <= 430;
 
   if (!isMobile.value && slidesWrapper.value) {
     slidesWrapper.value.addEventListener('scroll', onScroll);
